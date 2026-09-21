@@ -1,4 +1,4 @@
-Title,Type,Domaine,Priorité,Estimation
+Title,Types,Domaine,Priorité,Estimation
 "Initialisation du projet",Chore,Infra,Must have,3
 "Documentation Swagger de base",Chore,Infra,Must have,2
 "Inscription utilisateur",Feature,Auth & Users,Must have,3
