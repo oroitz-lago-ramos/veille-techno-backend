@@ -9,6 +9,8 @@ services:
       POSTGRES_DB: veille_db
     ports:
       - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
   veille-api:
     build:
       context: .
@@ -17,4 +19,5 @@ services:
     restart: unless-stopped
     ports:
       - "3000:3000"
-
+volumes:
+  postgres_data:
