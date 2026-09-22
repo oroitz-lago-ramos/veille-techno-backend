@@ -122,3 +122,10 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 ## License
 
 Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+
+
+To use docker: 
+docker build -t name-u-want .
+docker run -p 3000:3000 name-u-want
+To use docker compose: 
+docker-compose up --build -d

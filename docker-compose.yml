@@ -1,0 +1,9 @@
+services:
+  veille-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: veille-techno-backend
+    restart: always
+    ports:
+      - "3000:3000"
