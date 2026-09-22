@@ -1,9 +1,20 @@
 services:
+  db:
+    image: postgres:15-alpine
+    container_name: veille-techno-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: veille_user
+      POSTGRES_PASSWORD: veille_password
+      POSTGRES_DB: veille_db
+    ports:
+      - "5432:5432"
   veille-api:
     build:
       context: .
       dockerfile: Dockerfile
     container_name: veille-techno-backend
-    restart: always
+    restart: unless-stopped
     ports:
       - "3000:3000"
+
