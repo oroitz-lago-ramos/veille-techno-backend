@@ -8,10 +8,10 @@ import {
 
 @Entity('users')
 export class User {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-  @Column({ length: 100 })
+  @Column({ length: 50 })
   name: string;
 
   @Index({ unique: true })

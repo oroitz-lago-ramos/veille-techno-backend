@@ -1,7 +1,12 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UsersResolver } from './users/users.resolver';
+import { UsersModule } from './users/users.module';
+import { ListsModule } from './lists/lists.module';
+import { CardsModule } from './cards/cards.module';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -13,11 +18,18 @@ import { UsersResolver } from './users/users.resolver';
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_DATABASE,
-      entities: [__dirname + '/**/*.entity{.ts,.js}'],
+      entities: [],
+      // entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: process.env.SYNCHRONIZE === 'true',
+      autoLoadEntities: true,
     }),
+    UsersModule,
+    ListsModule,
+    CardsModule,
+    AuthModule,
   ],
-  providers: [UsersResolver],
+  controllers: [AppController],
+  providers: [AppService],
 })
 export class AppModule {}
 
