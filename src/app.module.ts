@@ -7,6 +7,7 @@ import { CardsModule } from './cards/cards.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
+import { HashingModule } from './hashing/hashing.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { AuthModule } from './auth/auth.module';
     ListsModule,
     CardsModule,
     AuthModule,
+    HashingModule,
   ],
   controllers: [AppController],
   providers: [AppService],
