@@ -5,9 +5,10 @@ import { UpdateListDto } from './dto/update-list.dto';
 import { AuthGuard } from '../auth/auth.guard';
 import { GetUser } from '../auth/get-user.decorator';
 import { User } from '../users/entities/user.entity';
-import { ApiOperation, ApiResponse, ApiBearerAuth } from '@nestjs/swagger';
+import { ApiOperation, ApiResponse, ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { HttpCode } from '@nestjs/common';
 
+@ApiTags('Lists')
 @Controller('lists')
 export class ListsController {
   constructor(private readonly listsService: ListsService) {}

@@ -23,6 +23,9 @@ export class AuthController {
 
   @HttpCode(HttpStatus.OK)
   @Post('login')
+  @ApiOperation({ summary: 'Log in and receive a JWT access token' })
+  @ApiResponse({ status: 200, description: 'Login successful, returns accessToken' })
+  @ApiResponse({ status: 401, description: 'Invalid email or password' })
   signIn(@Body() signInDto: SignInDto) {
     return this.authService.signIn(signInDto.email, signInDto.password);
   }
@@ -38,6 +41,9 @@ export class AuthController {
 
   @UseGuards(AuthGuard)
   @ApiBearerAuth()
+  @ApiOperation({ summary: 'Get the currently authenticated user (from JWT)' })
+  @ApiResponse({ status: 200, description: 'Returns the decoded JWT user payload' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   @Get('profile')
   getProfile(@Request() req: any) {
     return req.user;
