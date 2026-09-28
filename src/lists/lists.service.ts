@@ -35,14 +35,24 @@ export class ListsService {
     return `This action updates a #${id} list`;
   }
 
-  async remove(id: number, user: User) {
+  async findOneOrThrow(id: number, user: User): Promise<List> {
     const list = await this.listsRepository.findOne({
       where: { id },
       relations: { owner: true },
     });
 
-    if (!list) { throw new NotFoundException; }
-    if (list.owner.id !== user.id) { throw new ForbiddenException('You are nto the owner of this list'); }
+    if (!list) {
+      throw new NotFoundException('List not found');
+    }
+    if (list.owner.id !== user.id) {
+      throw new ForbiddenException('You are not the owner of this list');
+    }
+
+    return list;
+  }
+
+  async remove(id: number, user: User) {
+    const list = await this.findOneOrThrow(id,user);
     await this.listsRepository.remove(list);
   }
 }
