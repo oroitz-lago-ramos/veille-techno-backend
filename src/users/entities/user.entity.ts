@@ -3,7 +3,9 @@ import {
   PrimaryGeneratedColumn,
   Column,
   Index,
+  CreateDateColumn,
 } from 'typeorm';
+import { Role } from '../enum/role.enum';
 
 
 @Entity('users')
@@ -20,6 +22,12 @@ export class User {
 
   @Column({ select: false })
   password: string;
+
+  @Column({ type: 'enum', enum: Role, default: Role.USER})
+  role: Role;
+
+  @CreateDateColumn()
+  createdAt: Date;
 
   //DOC: Here I have seen on a tutorial that we can do : 
   /* @BeforeInsert()

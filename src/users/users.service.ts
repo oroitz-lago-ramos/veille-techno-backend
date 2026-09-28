@@ -30,14 +30,6 @@ export class UsersService {
 
   }
 
-  findAll() {
-    return `This action returns all users`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
-  }
-
   findOneByEmail(email: string)
   {
     return this.usersRepository.findOne({where: { email }});
