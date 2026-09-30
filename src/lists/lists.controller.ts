@@ -36,8 +36,16 @@ export class ListsController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateListDto: UpdateListDto) {
-    return this.listsService.update(+id, updateListDto);
+  @UseGuards(AuthGuard)
+  @ApiOperation({ summary: 'Update a list if you are the owner' })
+  @ApiResponse({ status: 200, description: 'List updated successfully' })
+  @ApiResponse({ status: 400, description: 'Invalid payload' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @ApiResponse({ status: 403, description: 'Forbidden - not the owner' })
+  @ApiResponse({ status: 404, description: 'List not found' })
+  @ApiBearerAuth()
+  update(@Param('id') id: string, @Body() updateListDto: UpdateListDto, @GetUser() user: User) {
+    return this.listsService.update(+id, updateListDto, user);
   }
 
   @UseGuards(AuthGuard)

@@ -13,17 +13,17 @@ export class AuthService {
 		private jwtService: JwtService
 	) { }
 
-	async signIn(email: string, pass: string): Promise<{access_token: string}> {
+	async signIn(email: string, pass: string): Promise<{accessToken: string}> {
 		const user = await this.usersService.findOneByEmailWithPassword(email);
 		if (!user) { throw new UnauthorizedException()}
 		const passwordMatches = await this.hashingService.compare(pass, user.password);
 		if (!passwordMatches) {throw new UnauthorizedException()}
-		
-		const payload = { sub: user.id, name: user.name, email: user.email };
+
+		const payload = { sub: user.id, name: user.name, email: user.email, role: user.role };
 		return {
-      	// 💡 Here the JWT secret key that's used for signing the payload 
+      	// 💡 Here the JWT secret key that's used for signing the payload
       	// is the key that was passed in the JwtModule
-      		access_token: await this.jwtService.signAsync(payload),
+      		accessToken: await this.jwtService.signAsync(payload),
     	};
 	}
 

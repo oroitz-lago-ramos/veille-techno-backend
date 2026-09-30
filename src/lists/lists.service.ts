@@ -31,8 +31,10 @@ export class ListsService {
     });
   }
 
-  update(id: number, updateListDto: UpdateListDto) {
-    return `This action updates a #${id} list`;
+  async update(id: number, updateListDto: UpdateListDto, user: User) {
+    const list = await this.findOneOrThrow(id, user);
+    Object.assign(list, updateListDto);
+    return this.listsRepository.save(list);
   }
 
   async findOneOrThrow(id: number, user: User): Promise<List> {

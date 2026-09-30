@@ -40,13 +40,28 @@ export class CardsController {
   }
 
   @Get('cards/:id')
-  findOne(@Param('id') id: string) {
-    return this.cardsService.findOne(+id);
+  @UseGuards(AuthGuard)
+  @ApiOperation({ summary: 'Get a card if you own its parent list' })
+  @ApiResponse({ status: 200, description: 'Card retrieved successfully' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @ApiResponse({ status: 403, description: 'Forbidden - not the owner of the list' })
+  @ApiResponse({ status: 404, description: 'Card not found' })
+  @ApiBearerAuth()
+  findOne(@Param('id') id: string, @GetUser() user: User) {
+    return this.cardsService.findOne(+id, user);
   }
 
   @Patch('cards/:id')
-  update(@Param('id') id: string, @Body() updateCardDto: UpdateCardDto) {
-    return this.cardsService.update(+id, updateCardDto);
+  @UseGuards(AuthGuard)
+  @ApiOperation({ summary: 'Update a card (title, description, position, or move to another list)' })
+  @ApiResponse({ status: 200, description: 'Card updated successfully' })
+  @ApiResponse({ status: 400, description: 'Invalid payload' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @ApiResponse({ status: 403, description: 'Forbidden - not the owner of the card or target list' })
+  @ApiResponse({ status: 404, description: 'Card or target list not found' })
+  @ApiBearerAuth()
+  update(@Param('id') id: string, @Body() updateCardDto: UpdateCardDto, @GetUser() user: User) {
+    return this.cardsService.update(+id, updateCardDto, user);
   }
 
   @Delete('cards/:id')

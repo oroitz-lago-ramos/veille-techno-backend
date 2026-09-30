@@ -35,12 +35,8 @@ export class CardsService {
     return cards;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} card`;
-  }
-
-  update(id: number, updateCardDto: UpdateCardDto) {
-    return `This action updates a #${id} card`;
+  findOne(id: number, user: User) {
+    return this.findOneOrThrow(id, user);
   }
 
   async remove(id: number, user: User) {
